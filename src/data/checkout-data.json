@@ -1,0 +1,30 @@
+{
+  "validCustomer": {
+    "firstName": "Alex",
+    "lastName": "Johnson",
+    "postalCode": "70000"
+  },
+  "invalidCheckout": [
+    {
+      "testCase": "TC_CHK_01: Missing First Name",
+      "firstName": "",
+      "lastName": "Johnson",
+      "postalCode": "70000",
+      "errorMessage": "Error: First Name is required"
+    },
+    {
+      "testCase": "TC_CHK_02: Missing Last Name",
+      "firstName": "Alex",
+      "lastName": "",
+      "postalCode": "70000",
+      "errorMessage": "Error: Last Name is required"
+    },
+    {
+      "testCase": "TC_CHK_03: Missing Postal Code",
+      "firstName": "Alex",
+      "lastName": "Johnson",
+      "postalCode": "",
+      "errorMessage": "Error: Postal Code is required"
+    }
+  ]
+}

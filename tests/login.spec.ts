@@ -1,26 +1,33 @@
-import {test, expect} from '@playwright/test';
-import {LoginPage} from '../src/pages/login-page';
+import {test} from '../src/fixtures/page-fixture';
+import userData from '../src/data/users.json';
 
 test.describe('AUTHENTICATION FLOW', () => {
 
-    test('TC01: Login with block user', async({page}) => {
-        
-        const loginPage = new LoginPage(page);
-
+    test.beforeEach(async ({loginPage}) => {
         await loginPage.navigateTo();
-
-        await loginPage.login('locked_out_user', 'secret_sauce');
-
-        await loginPage.verifyError('Epic sadface: Sorry, this user has been locked out.');
     });
 
-    test('TC02: Verify successful login with standard user', async({page}) => {
-        const loginPage = new LoginPage(page);
-
-        await loginPage.navigateTo();
-
-        await loginPage.login('standard_user' , 'secret_sauce');
-
+    test('TC01: Verify successful login with standard user', async({loginPage}) => {
+        await loginPage.login(
+            userData.validUser.username,
+            userData.validUser.password
+        );
         await loginPage.verifyURLContains('inventory.html');
-    })
-})
+    });
+
+    test('TC02: Verify error message with locked user', async ({loginPage}) =>{
+        await loginPage.login(
+            userData.lockedUser.username,
+            userData.lockedUser.password
+        );
+        await loginPage.verifyError(userData.lockedUser.errorMessage);
+    });
+
+    // Invalid Users
+    for (const scenario of userData.invalidUsers){
+        test(`${scenario.testCase}`, async({loginPage}) => {
+            await loginPage.login(scenario.username, scenario.password);
+            await loginPage.verifyError(scenario.errorMessage);
+        });
+    }
+});

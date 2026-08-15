@@ -8,6 +8,7 @@ export class CheckoutPage extends BasePage {
     readonly continueBtn: Locator;
     readonly finishBtn: Locator;
     readonly notice: Locator;
+    readonly error: Locator;
 
     constructor(page: Page) {
         super(page);
@@ -16,7 +17,8 @@ export class CheckoutPage extends BasePage {
         this.zipCode = page.locator(`[data-test="postalCode"]`);
         this.continueBtn = page.locator(`[data-test="continue"]`);
         this.finishBtn = page.locator(`[data-test="finish"]`);
-        this.notice = page.locator(`.complete-header`)
+        this.notice = page.locator(`.complete-header`);
+        this.error = page.locator(`[data-test="error"]`);
     }
 
     async fillCheckoutInformation(firstName: string, lastName: string, postalCode: string) {
@@ -32,5 +34,9 @@ export class CheckoutPage extends BasePage {
 
     async verifyOrderSuccess(noticeText: string) {
         await expect(this.notice).toHaveText(noticeText);
+    }
+
+    async verifyErrorMessage(expectedError: string){
+        await expect(this.error).toHaveText(expectedError);
     }
 }
