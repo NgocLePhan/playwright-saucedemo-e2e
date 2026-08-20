@@ -8,7 +8,7 @@ test.describe('Checkout Flow', () => {
         await loginPage.navigateTo();
     });
 
-    test('Checkout with valid user', async ({ loginPage, inventoryPage, cartPage, checkoutPage }) => {
+    test('Checkout with valid user @smoke @critical', async ({ loginPage, inventoryPage, cartPage, checkoutPage }) => {
         await loginPage.login(
             userData.validUser.username,
             userData.validUser.password
@@ -31,7 +31,7 @@ test.describe('Checkout Flow', () => {
     });
 
     for(const scenario of checkoutData.invalidCheckout){
-        test(`${scenario.testCase}`, async({loginPage, inventoryPage, cartPage, checkoutPage}) => {
+        test(`${scenario.testCase} @regression`, async({loginPage, inventoryPage, cartPage, checkoutPage}) => {
             await loginPage.login(
                 userData.validUser.username,
                 userData.validUser.password

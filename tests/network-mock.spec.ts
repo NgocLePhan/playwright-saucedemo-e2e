@@ -2,7 +2,7 @@ import {test, expect} from '../src/fixtures/page-fixture';
 import userData from '../src/data/users.json';
 
 test.describe('NETWORK INTERCEPTION & MOCKING', () => {
-    test('Task 1: Abort all image requests (Test UI resilience when assets fail)', async({loginPage, page}) => {
+    test('Task 1: Abort all image requests (Test UI resilience when assets fail) @network', async({loginPage, page}) => {
         await page.route('**/*.{png,jpg,jpeg,svg}', (route) => {
             route.abort();
         });
@@ -13,7 +13,7 @@ test.describe('NETWORK INTERCEPTION & MOCKING', () => {
         await loginPage.verifyURLContains('inventory.html');
     });
 
-    test('Task 2: Mock and replace product image dynamically', async({page, loginPage}) => {
+    test('Task 2: Mock and replace product image dynamically @network', async({page, loginPage}) => {
         await page.route('**/sauce-backpack-1200x1500*.jpg', async(route) => {
             await route.fulfill({
                 status: 200,

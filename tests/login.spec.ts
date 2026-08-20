@@ -7,7 +7,7 @@ test.describe('AUTHENTICATION FLOW', () => {
         await loginPage.navigateTo();
     });
 
-    test('TC01: Verify successful login with standard user', async({loginPage}) => {
+    test('TC01: Verify successful login with standard user @smoke @regression', async({loginPage}) => {
         await loginPage.login(
             userData.validUser.username,
             userData.validUser.password
@@ -15,7 +15,7 @@ test.describe('AUTHENTICATION FLOW', () => {
         await loginPage.verifyURLContains('inventory.html');
     });
 
-    test('TC02: Verify error message with locked user', async ({loginPage}) =>{
+    test('TC02: Verify error message with locked user @regression', async ({loginPage}) =>{
         await loginPage.login(
             userData.lockedUser.username,
             userData.lockedUser.password
@@ -25,7 +25,7 @@ test.describe('AUTHENTICATION FLOW', () => {
 
     // Invalid Users
     for (const scenario of userData.invalidUsers){
-        test(`${scenario.testCase}`, async({loginPage}) => {
+        test(`${scenario.testCase} @regression`, async({loginPage}) => {
             await loginPage.login(scenario.username, scenario.password);
             await loginPage.verifyError(scenario.errorMessage);
         });
