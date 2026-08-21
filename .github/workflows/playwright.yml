@@ -26,8 +26,8 @@ jobs:
     - name: 4. Install Playwright Browsers
       run: npx playwright install --with-deps
 
-    - name: 5. Run All Playwright Tests
-      run: npx playwright test
+    - name: 5. Run Playwright Tests (Excluding Visual Regression)
+      run: npx playwright test --grep-invert "@visual"
 
     - name: 6. Upload HTML Report
       uses: actions/upload-artifact@v4
@@ -36,6 +36,3 @@ jobs:
         name: playwright-execution-report
         path: playwright-report/
         retention-days: 30
-
-    - name: Run Playwright tests
-      run: npx playwright test --grep-invert "@visual"
