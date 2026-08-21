@@ -36,3 +36,6 @@ jobs:
         name: playwright-execution-report
         path: playwright-report/
         retention-days: 30
+
+    - name: Run Playwright tests
+      run: npx playwright test --grep-invert "@visual"
