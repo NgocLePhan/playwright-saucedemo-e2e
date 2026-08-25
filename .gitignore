@@ -9,3 +9,6 @@ node_modules/
 
 # Authentication storage state
 .auth/
+
+# Downloaded test artifacts
+tests/downloads/
