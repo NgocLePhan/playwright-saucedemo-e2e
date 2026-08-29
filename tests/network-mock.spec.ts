@@ -1,8 +1,8 @@
-import {test, expect} from '../src/fixtures/page-fixture';
+import { test, expect } from '../src/fixtures/page-fixture';
 import userData from '../src/data/users.json';
 
 test.describe('NETWORK INTERCEPTION & MOCKING', () => {
-    test('Task 1: Abort all image requests (Test UI resilience when assets fail) @network', async({loginPage, page}) => {
+    test('Task 1: Abort all image requests (Test UI resilience when assets fail) @network', async ({ loginPage, page }) => {
         await page.route('**/*.{png,jpg,jpeg,svg}', (route) => {
             route.abort();
         });
@@ -13,8 +13,8 @@ test.describe('NETWORK INTERCEPTION & MOCKING', () => {
         await loginPage.verifyURLContains('inventory.html');
     });
 
-    test('Task 2: Mock and replace product image dynamically @network', async({page, loginPage}) => {
-        await page.route('**/sauce-backpack-1200x1500*.jpg', async(route) => {
+    test('Task 2: Mock and replace product image dynamically @network', async ({ page, loginPage }) => {
+        await page.route('**/sauce-backpack-1200x1500*.jpg', async (route) => {
             await route.fulfill({
                 status: 200,
                 contentType: 'image/png',
@@ -26,13 +26,13 @@ test.describe('NETWORK INTERCEPTION & MOCKING', () => {
         await loginPage.login(userData.validUser.username, userData.validUser.password);
 
         await loginPage.verifyURLContains('inventory.html');
-    });  
+    });
 });
 
 test.describe('PRACTICE API MOCKING', () => {
-     // Practice mock 
-    test('Lab 1: Chặn toàn bộ ảnh JPG', async({loginPage, page}) => {
-        await page.route('**/*.jpg', async(route) => {
+    // Practice mock 
+    test('Lab 1: Chặn toàn bộ ảnh JPG', async ({ loginPage, page }) => {
+        await page.route('**/*.jpg', async (route) => {
             console.log('Image block:', route.request().url());
             route.abort();
         });
@@ -43,8 +43,8 @@ test.describe('PRACTICE API MOCKING', () => {
         await loginPage.verifyURLContains('inventory.html');
     });
 
-    test('Lab 2: Giả lập lỗi Server 500', async({page, loginPage}) => {
-        await page.route('**/bolt-shirt-1200x1500-mR0ldpVS.jpg', async(route) => {
+    test('Lab 2: Giả lập lỗi Server 500', async ({ page, loginPage }) => {
+        await page.route('**/bolt-shirt-1200x1500-mR0ldpVS.jpg', async (route) => {
             route.fulfill({
                 status: 500,
                 contentType: 'text/plain',
@@ -58,7 +58,7 @@ test.describe('PRACTICE API MOCKING', () => {
         await loginPage.verifyURLContains('inventory.html');
     });
 
-test('Mock fruit list API with custom data', async ({ page }) => {
+    test('Mock fruit list API with custom data', async ({ page }) => {
         // 1. ĐẶT TRẠM GÁC: Bắt request gọi API lấy danh sách trái cây
         await page.route('*/**/api/v1/fruits', async (route) => {
             // Chuẩn bị dữ liệu giả mạo theo ý bạn

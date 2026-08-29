@@ -30,8 +30,8 @@ test.describe('Checkout Flow', () => {
         await checkoutPage.verifyOrderSuccess(`Thank you for your order!`);
     });
 
-    for(const scenario of checkoutData.invalidCheckout){
-        test(`${scenario.testCase} @regression`, async({loginPage, inventoryPage, cartPage, checkoutPage}) => {
+    for (const scenario of checkoutData.invalidCheckout) {
+        test(`${scenario.testCase} @regression`, async ({ loginPage, inventoryPage, cartPage, checkoutPage }) => {
             await loginPage.login(
                 userData.validUser.username,
                 userData.validUser.password
