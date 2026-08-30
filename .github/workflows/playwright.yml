@@ -29,7 +29,7 @@ jobs:
       run: npm ci
 
     - name: Install Playwright Browsers
-      run: npx playwright install --with-deps ${{ matrix.project }}
+      run: npx playwright install --with-deps chromium ${{ matrix.project }}
 
     - name: Run Playwright Tests
       run: npx playwright test --project=${{ matrix.project }} --grep-invert "@visual"
