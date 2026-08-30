@@ -1,1 +1,0 @@
-[{"uid":"d7d332d41380988c","name":"TC01: Successful order flow @smoke","time":{"start":1788078251734,"stop":1788078252361,"duration":627},"status":"passed","severity":"critical"},{"uid":"a273db44a214b0fa","name":"authenticate standard user","time":{"start":1788078247802,"stop":1788078248861,"duration":1059},"status":"passed","severity":"normal"}]

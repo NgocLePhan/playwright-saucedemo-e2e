@@ -1,3 +1,0 @@
-"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"","627","TC01: Successful order flow @smoke","chromium","2026-08-30","passed","2026-08-30","E-COMMERCE CHECKOUT FLOW","allure-metadata.spec.ts","",""
-"","1059","authenticate standard user","setup","2026-08-30","passed","2026-08-30","","auth.setup.ts","",""
