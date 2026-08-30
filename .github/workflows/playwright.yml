@@ -1,4 +1,4 @@
-name: Playwright Enterprise CI/CD Pipeline
+name: Playwright Tests Matrix CI
 
 on:
   push:
@@ -10,29 +10,34 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        project: [chromium, firefox, webkit]
 
     steps:
-    - name: 1. Checkout repository code
+    - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: 2. Setup Node.js
+    - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: 22
+        node-version: 20
+        cache: 'npm'
 
-    - name: 3. Install dependencies
+    - name: Install dependencies
       run: npm ci
 
-    - name: 4. Install Playwright Browsers
-      run: npx playwright install --with-deps
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps ${{ matrix.project }}
 
-    - name: 5. Run Playwright Tests (Excluding Visual Regression)
-      run: npx playwright test --grep-invert "@visual"
+    - name: Run Playwright Tests
+      run: npx playwright test --project=${{ matrix.project }}
 
-    - name: 6. Upload HTML Report
+    - name: Upload Playwright Report Artifact
       uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
-        name: playwright-execution-report
+        name: playwright-report-${{ matrix.project }}
         path: playwright-report/
-        retention-days: 30
+        retention-days: 14
