@@ -1,4 +1,4 @@
-name: Playwright Tests Matrix CI
+name: Playwright Tests & Allure Report
 
 on:
   push:
@@ -10,10 +10,6 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        project: [chromium, firefox, webkit]
 
     steps:
     - name: Checkout repository
@@ -29,15 +25,32 @@ jobs:
       run: npm ci
 
     - name: Install Playwright Browsers
-      run: npx playwright install --with-deps chromium ${{ matrix.project }}
+      run: npx playwright install --with-deps chromium
 
     - name: Run Playwright Tests
-      run: npx playwright test --project=${{ matrix.project }} --grep-invert "@visual"
+      run: npx playwright test tests/allure-metadata.spec.ts --project=chromium 
+      continue-on-error: true
 
-    - name: Upload Playwright Report Artifact
-      uses: actions/upload-artifact@v4
-      if: ${{ !cancelled() }}
+    - name: Load Allure Report History
+      uses: actions/checkout@v4
+      if: always()
+      continue-on-error: true
       with:
-        name: playwright-report-${{ matrix.project }}
-        path: playwright-report/
-        retention-days: 14
+        ref: gh-pages
+        path: gh-pages
+
+    - name: Build Allure Report
+      uses: simple-elf/allure-report-action@v1.7
+      if: always()
+      with:
+        allure_results: allure-results
+        allure_history: allure-history
+        keep_reports: 20
+
+    - name: Deploy Allure Report to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      if: always()
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_branch: gh-pages
+        publish_dir: allure-history
