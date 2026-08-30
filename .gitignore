@@ -12,3 +12,6 @@ node_modules/
 
 # Downloaded test artifacts
 tests/downloads/
+
+allure-results/
+allure-report/
