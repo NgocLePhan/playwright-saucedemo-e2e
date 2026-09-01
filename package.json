@@ -11,7 +11,7 @@
     "allure:open": "allure open allure-report",
     "allure:serve": "allure serve allure-results",
     "test:qa": "cross-env ENV=qa playwright test tests/environment-config.spec.ts",
-  "test:staging": "cross-env ENV=staging playwright test tests/environment-config.spec.ts"
+    "test:staging": "cross-env ENV=staging playwright test tests/environment-config.spec.ts"
   },
   "keywords": [],
   "author": "",
@@ -20,9 +20,11 @@
   "devDependencies": {
     "@playwright/test": "^1.62.1",
     "@types/node": "^26.3.0",
+    "@types/sql.js": "^1.4.11",
     "allure-commandline": "^2.43.0",
     "allure-playwright": "^3.11.0",
     "cross-env": "^10.1.0",
-    "dotenv": "^17.4.2"
+    "dotenv": "^17.4.2",
+    "sql.js": "^1.14.2"
   }
 }
